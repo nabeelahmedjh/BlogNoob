@@ -1,4 +1,5 @@
-from multiprocessing import context
+from multiprocessing import AuthenticationError, context
+from turtle import title
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Blog
@@ -7,6 +8,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from .forms import BlogForm
 # Create your views here.
 
 
@@ -26,6 +28,30 @@ def blog(request, pk):
 
     context = {'blog': blog}
     return render(request, 'base/blog.html', context)
+
+
+
+
+@login_required(login_url='login')
+def publishBlog(request):
+    form = BlogForm()
+
+
+    if request.method == "POST":
+        form = BlogForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.author = request.user
+            user.save()
+
+            return redirect('home')
+
+    context = {
+        'form': form
+    }
+
+    return render(request, 'base/publish_blog.html', context)
+
 
 def registerUser(request):
     form = UserCreationForm()

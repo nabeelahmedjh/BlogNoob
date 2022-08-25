@@ -19,7 +19,7 @@ class Blog(models.Model):
 
     title = models.CharField(max_length=200, null=False)
 
-    author = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     topic = models.ForeignKey(Topic, on_delete=models.SET_NULL, null=True)
 
     body = models.TextField()
