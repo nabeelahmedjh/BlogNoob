@@ -1,0 +1,19 @@
+{% extends 'main.html' %}
+
+
+{% block content %}
+<div>
+    <h1>Blogs</h1>
+    {% for blog in blogs %}
+    <div>
+        <h2>{{blog.title}}</h2>
+        <span>{{blog.created|timesince}} ago</span>
+        <p>{{blog}}... <a href="{% url 'blog' blog.id %}">view more</a></p>
+
+        <small>{{blog.topic}}</small>
+    </div>
+
+    {% endfor %}
+</div>
+
+{% endblock content %}
