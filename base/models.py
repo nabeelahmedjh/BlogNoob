@@ -23,10 +23,13 @@ class Blog(models.Model):
     topic = models.ForeignKey(Topic, on_delete=models.SET_NULL, null=True)
 
     body = models.TextField()
-    created = models.DateTimeField(auto_now=True)
+    updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
         return self.body[0:500]
+    
+    class Meta:
+        ordering = ['-created', '-updated']
 
 

@@ -53,6 +53,45 @@ def publishBlog(request):
     return render(request, 'base/publish_blog.html', context)
 
 
+@login_required(login_url='login')
+def updateBlog(request, pk):
+    blog = Blog.objects.get(id=pk)
+    form = BlogForm(instance=blog)
+
+    if request.method == "POST":
+        form = BlogForm(request.POST, instance=blog)
+
+        if form.is_valid():
+            blog = form.save()
+            return redirect('home')
+
+    context = {
+        'page': 'Update Blog',
+        'form': form
+    }
+
+    return render(request, 'base/update.html', context)
+
+@login_required(login_url='login')
+def deleteBlog(request, pk):
+
+    blog = Blog.objects.get(id=pk)
+
+    if request.method == 'POST':
+        if request.user == blog.author:
+            blog.delete()
+            messages.success(request, "Blog deleted sucessfully")
+        else:
+            messages.error(request, "You are not allowed to delete Blog")
+        return redirect('home')
+    context = {
+        'blog': blog
+    }
+
+    return render(request, 'base/delete.html', context)
+
+
+
 def registerUser(request):
     form = UserCreationForm()
 

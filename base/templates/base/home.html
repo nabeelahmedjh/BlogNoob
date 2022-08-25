@@ -8,10 +8,15 @@
     <div>
         <h5>{{blog.author}}</h5>
         <h2>{{blog.title}}</h2>
-        <span>{{blog.created|timesince}} ago</span>
+        <span>{{blog.created| date:"M j"}}</span>
         <p>{{blog}}... <a href="{% url 'blog' blog.id %}">view more</a></p>
 
         <small>{{blog.topic}}</small>
+
+        {% if request.user == blog.author%}
+        <a href="{% url 'update-blog' blog.id %}">Edit</a>
+        <a href="{% url 'delete-blog' blog.id %}">Delete</a>
+        {% endif %}
     </div>
 
     {% endfor %}
