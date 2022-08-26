@@ -1,4 +1,5 @@
 
+from email.policy import default
 from django.db import models
 from django.contrib.auth.models import User
 # Create your models here
@@ -6,8 +7,14 @@ from django.contrib.auth.models import User
 
 
 class Profile(models.Model):
+    full_name = models.CharField(max_length=200, null=True)
     bio = models.TextField()
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
+    avatar = models.ImageField(upload_to='avatar/', default='avatar/default.jpg',null=True)
+
+
+    def __str__(self) -> str:
+        return self.full_name
 
 
 class Topic(models.Model):

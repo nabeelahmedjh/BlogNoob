@@ -6,12 +6,13 @@
     <h1>Blogs</h1>
     {% for blog in blogs %}
     <div>
-        <h5>{{blog.author}}</h5>
+        <h5><a href="{% url 'user-profile' blog.author.id %}">@{{blog.author}}</a></h5>
         <h2>{{blog.title}}</h2>
         <span>{{blog.created| date:"M j"}}</span>
         <p>{{blog}}... <a href="{% url 'blog' blog.id %}">view more</a></p>
 
-        <small>{{blog.topic}}</small>
+        <!-- <a href="{% url 'home' %}?q={{ blog.topic}}"><small>{{blog.topic}}</small></a> -->
+
 
         {% if request.user == blog.author%}
         <a href="{% url 'update-blog' blog.id %}">Edit</a>

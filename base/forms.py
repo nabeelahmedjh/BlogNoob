@@ -1,8 +1,8 @@
 from dataclasses import field
 from pyexpat import model
 from django.forms import ModelForm
-from django.contrib.auth.models import User
-from .models import Blog
+
+from .models import Blog, Profile
 
 
 # class UserForm(ModelForm):
@@ -18,3 +18,10 @@ class BlogForm(ModelForm):
         model = Blog
         fields = '__all__'
         exclude = ['author']
+
+class ProfileForm(ModelForm):
+
+    class Meta:
+        model = Profile
+        fields = '__all__'
+        exclude = ['user']

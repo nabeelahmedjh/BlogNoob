@@ -2,18 +2,18 @@ from multiprocessing import AuthenticationError, context
 from turtle import title
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import Blog
+from .models import Blog, Profile
 
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .forms import BlogForm
+from .forms import BlogForm, ProfileForm
+from django.contrib.auth.models import User
 # Create your views here.
 
 
 def home(request):
-
     blogs = Blog.objects.all()
 
     context = {
@@ -101,6 +101,10 @@ def registerUser(request):
             user = form.save(commit=False)
             user.username = user.username.lower()
             user.save()
+            Profile.objects.create(
+                user=user
+            )
+            
             login(request, user)
             return redirect('home')
 
@@ -130,3 +134,17 @@ def loginUser(request):
 def logoutUser(request):
     logout(request)
     return redirect('home')
+
+@login_required(login_url='login')
+def userProfile(request, pk):
+    user = User.objects.get(id=pk)
+
+    return render(request, 'base/profile.html', {'user': user})
+
+
+@login_required(login_url='login')
+def editProfile(request, pk):
+    user = User.objects.get(id=pk)
+    
+
+    return render(request, 'base/edit_profile.html', {"user": user})
