@@ -107,6 +107,8 @@ def registerUser(request):
             
             login(request, user)
             return redirect('home')
+        else:
+            messages.error(request, 'Something went wrong')
 
     context = {
         'form': form
@@ -135,7 +137,7 @@ def logoutUser(request):
     logout(request)
     return redirect('home')
 
-@login_required(login_url='login')
+
 def userProfile(request, pk):
     user = User.objects.get(id=pk)
     blogs = Blog.objects.filter(author=user)
@@ -149,6 +151,16 @@ def userProfile(request, pk):
 @login_required(login_url='login')
 def editProfile(request, pk):
     user = User.objects.get(id=pk)
-    form = ProfileForm(instance=user)
+    profile = Profile.objects.get(user=user)
+    form = ProfileForm(instance=profile)
+
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, instance=profile)
+
+        if form.is_valid():
+            user = form.save()
+            print(user)
+            messages.success(request, "Successfully updated the profile")
+            return redirect('home')
 
     return render(request, 'base/edit_profile.html', {"form": form})

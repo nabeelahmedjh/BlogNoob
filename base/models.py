@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 class Profile(models.Model):
     full_name = models.CharField(max_length=200, null=True)
     bio = models.TextField()
-    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     avatar = models.ImageField(upload_to='avatar/', default='avatar/default.jpg',null=True)
 
 
@@ -34,7 +34,7 @@ class Blog(models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
-        return self.body[0:500]
+        return self.body[0:300]
     
     class Meta:
         ordering = ['-created', '-updated']

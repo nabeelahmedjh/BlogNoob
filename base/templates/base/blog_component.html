@@ -1,10 +1,18 @@
 {% for blog in blogs %}
-<div>
-    <h5>
-        <a href="{% url 'user-profile' blog.author.id %}">@{{blog.author}}</a>
-    </h5>
-    <h2>{{blog.title}}</h2>
+<div class="container blog-container">
+    <img
+        class="blog-profile"
+        src="{{ blog.author.profile.avatar.url }}"
+        alt="profile-img"
+    />
+    <small>
+        <a href="{% url 'user-profile' blog.author.id %}"
+            >{{blog.author.profile.full_name}}</a
+        >
+    </small>
     <span>{{blog.created| date:"M j"}}</span>
+    <h2>{{blog.title}}</h2>
+
     <p>{{blog}}... <a href="{% url 'blog' blog.id %}">view more</a></p>
 
     <!-- <a href="{% url 'home' %}?q={{ blog.topic}}"><small>{{blog.topic}}</small></a> -->
