@@ -138,13 +138,17 @@ def logoutUser(request):
 @login_required(login_url='login')
 def userProfile(request, pk):
     user = User.objects.get(id=pk)
-
-    return render(request, 'base/profile.html', {'user': user})
+    blogs = Blog.objects.filter(author=user)
+    context = {
+        'user': user,
+        'blogs': blogs
+    }
+    return render(request, 'base/profile.html', context)
 
 
 @login_required(login_url='login')
 def editProfile(request, pk):
     user = User.objects.get(id=pk)
-    
+    form = ProfileForm(instance=user)
 
-    return render(request, 'base/edit_profile.html', {"user": user})
+    return render(request, 'base/edit_profile.html', {"form": form})

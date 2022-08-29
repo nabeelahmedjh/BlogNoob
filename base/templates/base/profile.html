@@ -1,12 +1,12 @@
-{% extends 'main.html' %}
-
-
-
-{% block content %}
+{% extends 'main.html' %} {% block content %}
 
 <div>
     <div>
-        <img style="width: 200px; border-radius: 50%" src="{{ user.profile.avatar.url }}" alt="profile-img">
+        <img
+            style="width: 200px; border-radius: 50%"
+            src="{{ user.profile.avatar.url }}"
+            alt="profile-img"
+        />
         <h3>{{user.profile.full_name}}</h3>
         <small>@{{user}}</small>
 
@@ -15,6 +15,11 @@
         <a href="{% url 'edit-profile' user.id %}">Edit Profile</a>
 
         {% endif %}
+    </div>
+
+    <div>
+        <h3>See what @{{user}} writes</h3>
+        <div>{% include 'base/blog_component.html' %}</div>
     </div>
 </div>
 

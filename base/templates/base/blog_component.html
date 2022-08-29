@@ -1,0 +1,18 @@
+{% for blog in blogs %}
+<div>
+    <h5>
+        <a href="{% url 'user-profile' blog.author.id %}">@{{blog.author}}</a>
+    </h5>
+    <h2>{{blog.title}}</h2>
+    <span>{{blog.created| date:"M j"}}</span>
+    <p>{{blog}}... <a href="{% url 'blog' blog.id %}">view more</a></p>
+
+    <!-- <a href="{% url 'home' %}?q={{ blog.topic}}"><small>{{blog.topic}}</small></a> -->
+
+    {% if request.user == blog.author%}
+    <a href="{% url 'update-blog' blog.id %}">Edit</a>
+    <a href="{% url 'delete-blog' blog.id %}">Delete</a>
+    {% endif %}
+</div>
+
+{% endfor %}
