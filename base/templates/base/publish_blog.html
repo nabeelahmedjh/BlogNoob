@@ -1,13 +1,29 @@
-{% extends 'main.html' %}
-
-{% block content %}
-
-<form action="" method="post">
+{% extends 'main.html' %} {% block content %}
+<div class='container blog-container'>
+<form  action="" method="post">
     {% csrf_token %}
+    <div class="mb-3">
+        <label for="{{field.label}}" class="form-label">Title</label>
+        <input type="{{field.type}}" class="form-control" name="title" />
+    </div>
+    <div class="mb-3">
+        <label for="{{field.label}}" class="form-label">Topic</label>
+        <input type="text" class="form-control" name='topic' list="topics" />
+        <select>
+            <datalist id="topics">
+                {% for topic in topics %}<option>{{topic.name}}</option>{% endfor %}
+            </datalist>
+        </select>
+        
+    </div>
+    <div class="mb-3">
+        <label for="{{field.label}}" class="form-label">Body</label>
+        <textarea type="{{field.type}}" class="form-control" rows="6" name="body" /></textarea>
+    </div>
 
-    {{form.as_p}}
-
-    <input type="submit" value="Publish">
+    <input type="submit" value="Publish" />
 </form>
+
+</div>
 
 {% endblock content %}

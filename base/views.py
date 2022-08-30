@@ -2,7 +2,7 @@ from multiprocessing import AuthenticationError, context
 from turtle import title
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import Blog, Profile
+from .models import Blog, Profile, Topic
 
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, logout, authenticate
@@ -34,20 +34,26 @@ def blog(request, pk):
 
 @login_required(login_url='login')
 def publishBlog(request):
-    form = BlogForm()
-
-
+    topics = Topic.objects.filter()
     if request.method == "POST":
-        form = BlogForm(request.POST)
-        if form.is_valid():
-            user = form.save(commit=False)
-            user.author = request.user
-            user.save()
-
+        try:
+            topic_name = request.POST.get('topic')
+            topic = Topic.objects.get_or_create(topic_name)
+            Blog.objects.create(
+            title=request.POST.get('title'),
+            author=request.user,
+            topic=topic,
+            body=request.POST.get('body')
+            )
+            messages.success(request,"Blog uploaded sucessfully")
             return redirect('home')
-
+        except Exception as e:
+            print(e)
+            messages.error(request, "Something went wrong")
+            return redirect('publish-blog')
+        
     context = {
-        'form': form
+        "topics" : topics
     }
 
     return render(request, 'base/publish_blog.html', context)
