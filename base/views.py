@@ -112,7 +112,7 @@ def registerUser(request):
             )
             
             login(request, user)
-            return redirect('home')
+            return redirect('edit-profile', pk=request.user.id)
         else:
             messages.error(request, 'Something went wrong')
 
