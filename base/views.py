@@ -122,7 +122,7 @@ def registerUser(request):
             )
             
             login(request, user)
-            return redirect('edit-profile', pk=request.user.id)
+            return redirect('Home')
         else:
             messages.error(request, 'Something went wrong')
 
@@ -178,7 +178,7 @@ def editProfile(request, pk):
             profile.user = user
             profile.save()
             messages.success(request, "Successfully updated the profile")
-            return redirect('user-profile', pk=user.id)
+            return redirect('home')
 
 
     return render(request, 'base/edit_profile.html', {"form": form})

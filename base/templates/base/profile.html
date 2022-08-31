@@ -8,7 +8,7 @@
             src="{{ user.profile.avatar.url }}"
             alt="profile-img"
         />
-        <h3>{{user.profile.full_name}}</h3>
+        <h3>@{{user}}</h3>
 
         {% if request.user == user%}
 

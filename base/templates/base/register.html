@@ -1,17 +1,56 @@
 {% extends 'main.html' %} {% block content %}
-<form action="" method="post">
-    {% csrf_token %} {% for field in form %}
-    <div class="mb-3">
-        <label for="{{field.label}}" class="form-label">{{field.label}}</label>
-        {{field}}
-    </div>
-    {% endfor %}
-    <input type="submit" value="Register" />
-</form>
 
-<div>
-    <h3>Already Signed up</h3>
-    <a href="{% url 'login' %}">Login</a>
+<div class="container authentication-container">
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="username" class="form-label">User Name</label>
+            <input
+                type="username"
+                class="form-control"
+                name="username"
+                aria-describedby="usernamehelp"
+            />
+            <div id="emailHelp" class="form-text">
+                We'll never share your info with anyone else.
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input
+                    type="password"
+                    class="form-control"
+                    name="password1"
+                    aria-describedby="passwordhelp"
+                />
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Confirm password</label>
+                <input
+                    type="password"
+                    class="form-control"
+                    name="password2"
+                    aria-describedby="passwordhelp"
+                />
+            </div>
+
+        <div class="alert alert-dark" role="alert">
+            <p>
+                Your password can’t be too similar to your other personal
+                information.
+            </p>
+            <p>Your password must contain at least 8 characters.</p>
+            <p>Your password can’t be a commonly used password.</p>
+            <p>Your password can’t be entirely numeric.</p>
+        </div>
+        <input class='btn btn-primary'type="submit" value="Register" />
+    </form>
+
+    <div class="not">
+        <h3>Already signed up?</h3>
+        <div class="d-grid gap-2">
+            <a class="btn btn-success" href="{% url 'login' %}">Login</a>
+        </div>
+    </div>
 </div>
 
 {% endblock content %}

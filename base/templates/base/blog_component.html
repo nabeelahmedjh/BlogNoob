@@ -15,14 +15,23 @@
 
     <p>{{blog}}... <a href="{% url 'blog' blog.id %}">view more</a></p>
 
-    <a class="btn" href="{% url 'home' %}?q={{ blog.topic}}"
-        ><small>{{blog.topic}}</small></a
-    >
+    <div class="row">
+        <div class="col-10">
+            <a
+                class="btn btn-outline-dark"
+                href="{% url 'home' %}?q={{ blog.topic}}"
+                ><small>{{blog.topic}}</small></a
+            >
+        </div>
 
-    {% if request.user == blog.author%}
-    <a href="{% url 'update-blog' blog.id %}">Edit</a>
-    <a href="{% url 'delete-blog' blog.id %}">Delete</a>
-    {% endif %}
+        <div class="col-2">
+            {% if request.user == blog.author%}
+
+            <a href="{% url 'update-blog' blog.id %}">Edit</a>
+            <a href="{% url 'delete-blog' blog.id %}">Delete</a>
+
+            {% endif %}
+        </div>
+    </div>
 </div>
-
 {% endfor %}
