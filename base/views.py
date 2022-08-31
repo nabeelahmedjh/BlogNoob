@@ -14,7 +14,13 @@ from django.contrib.auth.models import User
 
 
 def home(request):
-    blogs = Blog.objects.all()
+    q = request.GET.get('q') if request.GET.get('q') != None else ''
+    if q != '':
+        topic = Topic.objects.filter(name=q)
+        print(topic)
+        blogs = Blog.objects.filter(topic=topic[0:1])
+    else:
+        blog = blogs = Blog.objects.filter()
 
     context = {
         'blogs' : blogs
@@ -34,17 +40,21 @@ def blog(request, pk):
 
 @login_required(login_url='login')
 def publishBlog(request):
+    
     topics = Topic.objects.filter()
     if request.method == "POST":
         try:
             topic_name = request.POST.get('topic')
-            topic = Topic.objects.get_or_create(topic_name)
+
+            topic, created = Topic.objects.get_or_create(name=topic_name)
+
             Blog.objects.create(
             title=request.POST.get('title'),
             author=request.user,
             topic=topic,
             body=request.POST.get('body')
             )
+
             messages.success(request,"Blog uploaded sucessfully")
             return redirect('home')
         except Exception as e:
@@ -164,9 +174,11 @@ def editProfile(request, pk):
         form = ProfileForm(request.POST, instance=profile)
 
         if form.is_valid():
-            user = form.save()
-            print(user)
+            profile = form.save(commit=False)
+            profile.user = user
+            profile.save()
             messages.success(request, "Successfully updated the profile")
-            return redirect('home')
+            return redirect('user-profile', pk=user.id)
+
 
     return render(request, 'base/edit_profile.html', {"form": form})
