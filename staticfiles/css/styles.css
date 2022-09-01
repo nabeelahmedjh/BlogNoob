@@ -1,0 +1,65 @@
+body {
+    line-height: 1.5;
+}
+
+/* home feed  */
+
+#feed {
+    text-align: center;
+}
+.blog-container {
+    padding: 3% 15%;
+    text-align: justify;
+    font-size: 1.2rem;
+    line-height: 1.5;
+}
+
+.blog-profile {
+    border-radius: 50%;
+    width: 3%;
+    padding-bottom: 5px;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* blog page  */
+
+.blog-page {
+    text-align: justify;
+    font-size: 1.2rem;
+    line-height: 1.5;
+    padding: 3% 10%;
+}
+
+.blog-page-title {
+    font-weight: bold;
+    text-align: center;
+    padding-bottom: 30px;
+}
+
+/* profile page  */
+
+#profile {
+    text-align: center;
+}
+
+.avatar {
+    margin-bottom: 1rem;
+}
+
+/* login  */
+
+.authentication-container {
+    padding: 10% 30%;
+}
+
+.not {
+    margin-top: 50px;
+    text-align: center;
+}
+
+.center {
+    text-align: center;
+}
