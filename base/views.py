@@ -1,5 +1,4 @@
 from multiprocessing import AuthenticationError, context
-from turtle import title
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Blog, Profile, Topic
