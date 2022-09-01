@@ -121,7 +121,7 @@ def registerUser(request):
             )
             
             login(request, user)
-            return redirect('Home')
+            return redirect('home')
         else:
             messages.error(request, 'Something went wrong')
 
