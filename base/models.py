@@ -13,7 +13,8 @@ class Profile(models.Model):
 
 
     def __str__(self) -> str:
-        return self.full_name
+        if self.name != None:
+            return self.full_name
 
 
 class Topic(models.Model):
