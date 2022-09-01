@@ -1,1 +1,0 @@
-web gunicorn blognoob.wsgi:application --log-file -
