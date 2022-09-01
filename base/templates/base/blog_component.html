@@ -6,11 +6,8 @@
         alt="profile-img"
     />
     <small>
-        <a href="{% url 'user-profile' blog.author.id %}"
-            >{{blog.author.profile.full_name}}</a
-        >
+        <a href="{% url 'user-profile' blog.author.id %}">{{blog.author}}</a>
     </small>
-    <small>@{{user}}</small>
     <span>{{blog.created| date:"M j"}}</span>
     <h2>{{blog.title}}</h2>
 
