@@ -117,7 +117,8 @@ def registerUser(request):
             user.username = user.username.lower()
             user.save()
             Profile.objects.create(
-                user=user
+                user=user,
+                full_name=user.username
             )
             
             login(request, user)
